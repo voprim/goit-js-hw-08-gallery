@@ -104,6 +104,13 @@ function createGalleryMarkup(elements) {
 
 refs.galleryList.addEventListener('click', onOpenModal);
 
+function changeSrcAlt(argSrc, argAlt) {
+  return (
+    refs.modalImage.src = argSrc,
+    refs.modalImage.alt = argAlt
+  );
+}
+
 function onOpenModal(evt) {
   if (evt.target.nodeName !== 'IMG') {
     return;
@@ -111,8 +118,12 @@ function onOpenModal(evt) {
   evt.preventDefault(); //отмена перехода по ссылке
 
   refs.modal.classList.add('is-open'); // Открытие модального окна по клику на элементе галереи.
-  refs.modalImage.src = evt.target.dataset.source; // Подмена значения атрибута src элемента img.lightbox__image.
-  refs.modalImage.alt = evt.target.alt;
+  
+  changeSrcAlt(evt.target.dataset.source, evt.target.alt);
+
+  //refs.modalImage.src = evt.target.dataset.source; // Подмена значения атрибута src элемента img.lightbox__image.
+  //refs.modalImage.alt = evt.target.alt;
+
 
   window.addEventListener('keydown', onEscKeyPress);
   window.addEventListener('keydown', onArrowLeftPress);
@@ -124,8 +135,13 @@ refs.modalCloseBtn.addEventListener('click', onCloseModal);
 
 function onCloseModal() {
   refs.modal.classList.remove('is-open');
-  refs.modalImage.src = ''; // Очистка значения атрибута src элемента img.lightbox__image.
-  refs.modalImage.alt = '';
+ 
+  changeSrcAlt('', '');
+
+  //refs.modalImage.src = ''; // Очистка значения атрибута src элемента img.lightbox__image.
+  //refs.modalImage.alt = '';
+  
+  
   window.removeEventListener('keydown', onEscKeyPress);
   window.removeEventListener('keydown', onArrowLeftPress);
   window.removeEventListener('keydown', onArrowRightPress);
